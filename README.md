@@ -4,7 +4,7 @@ testem-failure-only-reporter
 Two `testem` reporters extracted from [`emberjs/ember.js`](https://github.com/emberjs/ember.js) for use by `emberjs` repositories. 
 
 #### Default, failure-only test reporter.
-Extends from the `testem` `tap` reporter. Only outputs results on failure. Outputs progress once every 100 tests to keep CI alive. 
+Extends from the `testem` `tap` reporter. Only outputs results on failure. Outputs progress once every 50 tests to keep CI alive. 
 ```js
 // testem.js
 const FailureOnlyReporter = require('testem-failure-only-reporter');
