@@ -5,6 +5,7 @@ class FailureOnlyReporter extends TapReporter {
 		super(...args);
 		this._reportCount = 0;
 		this._increment = 0;
+		this._startTime = new Date().getTime();
 	}
 
 	display(prefix, result) {
