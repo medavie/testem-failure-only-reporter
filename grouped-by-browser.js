@@ -25,15 +25,17 @@ class FailureOnlyPerBrowserReporter extends FailureOnlyReporter {
 		super.report(prefix, data);
 	}
 
-	millisecondsToMinutesAndSeconds(millis) {
-		var minutes = Math.floor(millis / 60000);
-		var seconds = parseInt((millis % 60000) / 1000, 10);
+	millisecondsToMinutesAndSeconds(ms) {
+		var minutes = Math.floor(ms / 60000);
+		var seconds = parseInt((ms % 60000) / 1000, 10);
 		return seconds === 60 ? minutes + 1 + ':00' : minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 	}
 
 	summaryDisplay() {
 		let lines = [];
 		let originalSummary = super.summaryDisplay();
+
+		originalSummary += '\n# execution time ' + this.millisecondsToMinutesAndSeconds(new Date().getTime() - this._startTime);
 		let resultsByBrowser = this._resultsByBrowser;
 		Object.keys(resultsByBrowser).forEach((browser) => {
 			let results = resultsByBrowser[browser];
@@ -44,7 +46,6 @@ class FailureOnlyPerBrowserReporter extends FailureOnlyReporter {
 			lines.push('# pass  ' + results.pass);
 			lines.push('# skip  ' + results.skipped);
 			lines.push('# fail  ' + (results.total - results.pass - results.skipped));
-			lines.push('# execution time ' + this.millisecondsToMinutesAndSeconds(new Date().getTime() - this._startTime));
 		});
 		lines.push('#');
 		return lines.join('\n') + '\n' + originalSummary;
